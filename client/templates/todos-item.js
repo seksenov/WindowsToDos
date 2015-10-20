@@ -57,36 +57,57 @@ Template.todosItem.rendered = function(){
     // Only call the notification on new tasks that are created
     if (Date.parse(this.data.createdAt) >= Session.get("LoadedTime")) {
       // Call notification to pop up toast
-      console.log("calling notification")
+      console.log(this.data)
       if(typeof Windows !== 'undefined' && 
        typeof Windows.UI !== 'undefined' && 
        typeof Windows.UI.Notifications !== 'undefined') {
 
-        var notifications = Windows.UI.Notifications;
-        //Get the XML template where the notification content will be suplied
-        var template = notifications.ToastTemplateType.toastImageAndText01;
-        var toastXml = notifications.ToastNotificationManager.getTemplateContent(template);
-        //Supply the text to the XML content
-        var toastTextElements = toastXml.getElementsByTagName("text");
-        toastTextElements[0].appendChild(toastXml.createTextNode(message));
-        //Supply an image for the notification
-        var toastImageElements = toastXml.getElementsByTagName("image");
-        //Set the image this could be the background of the note, get the image from the web
-        toastImageElements[0].setAttribute("src", "https://raw.githubusercontent.com/seksenov/grouppost/master/images/logo.png");
-        toastImageElements[0].setAttribute("alt", "red graphic");
-        //Specify a long duration
-        var toastNode = toastXml.selectSingleNode("/toast");
-        toastNode.setAttribute("duration", "long");
-        //Specify the audio for the toast notification
-        var toastNode = toastXml.selectSingleNode("/toast");                        
-        var audio = toastXml.createElement("audio");
-        audio.setAttribute("src", "ms-winsoundevent:Notification.IM");
-        //Specify launch paramater
-        toastXml.selectSingleNode("/toast").setAttribute("launch", '{"type":"toast","param1":"12345","param2":"67890"}');
-        //Create a toast notification based on the specified XML
-        var toast = new notifications.ToastNotification(toastXml);
-        //Send the toast notification
-        var toastNotifier = notifications.ToastNotificationManager.createToastNotifier();
+        var notifications = Windows.UI.Notifications,
+            templateType = notifications.ToastTemplateType.toastImageAndText02,
+            templateContent = notifications.ToastNotificationManager.getTemplateContent(templateType),
+            toastMessage = templateContent.getElementsByTagName('text'),
+            toastImage = templateContent.getElementsByTagName('image'),
+            toastElement = templateContent.selectSingleNode('/toast');
+
+        var launchParams = {
+            type: 'toast',
+            id: this.data.listId || 'demoToast',
+            heading: this.data.text || 'Demo title',
+            body: this.data.text || 'Demo message'
+        };
+
+        var launchString = JSON.stringify(launchParams);
+      
+        // Set message & image in toast template
+        toastMessage[0].appendChild(templateContent.createTextNode(this.data.text || 'Demo message'));
+        toastImage[0].setAttribute('src', imgUrl || 'https://unsplash.it/150/?random');
+        toastImage[0].setAttribute('alt', imgAlt || 'Random sample image');
+        toastElement.setAttribute('duration', 'long');
+        toastElement.setAttribute('launch', launchString); // Optional Launch Parameter
+
+        // Add actions
+        var actions = templateContent.createElement('actions');
+        templateContent.firstChild.appendChild(actions);
+
+        // Create a yes button
+        var btnYes = templateContent.createElement('action');
+        btnYes.setAttribute('content', 'Got It');
+        btnYes.setAttribute('arguments', 'yes');
+        btnYes.setAttribute('launchType', 'foreground');
+        actions.appendChild(btnYes);
+
+        //Create a no button
+        var btnNo = templateContent.createElement('action');
+        btnNo.setAttribute('content', 'Nope');
+        btnNo.setAttribute('arguments', 'no');
+        btnNo.setAttribute('launchType', 'foreground');
+        actions.appendChild(btnNo);
+
+        // Show the toast
+        var toast = new notifications.ToastNotification(templateContent);
+        var toastNotifier = new notifications.ToastNotificationManager.createToastNotifier();
+        toast.tag = 'demoToast';
+        console.log(toast);        
         toastNotifier.show(toast);
       }
     }

@@ -18,6 +18,26 @@ Meteor.startup(function () {
     if (typeof Windows !== 'undefined') {
       Windows.UI.WebUI.WebUIApplication.addEventListener("activated", function (args) {
         console.log("Windows application is activated");
+        // This is where handling the notification goes
+        var activation = Windows.ApplicationModel.Activation;
+
+        // Handle applcation launch from the Windows OS
+        if (args.kind === activation.ActivationKind.launch) {
+            // Check if there are launch args
+            if(args.arguments) {
+                var launchArgs = JSON.parse(args.arguments);
+
+                if (launchArgs.type === 'toast') {
+                // The app has been launched from the click of a notification
+                console.log(args);
+                }
+            }
+        }
+        // Handle user interaction from toast notification on Windows
+        else if (args.kind === activation.ActivationKind.toastNotification) {                
+              //toastHandler(args.argument, args.userInput.textReply);
+              console.log(args.argument);
+        }
       });
     } 
   }
