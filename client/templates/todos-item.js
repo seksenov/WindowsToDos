@@ -10,6 +10,7 @@ Template.todosItem.helpers({
   
 });
 
+
 Template.todosItem.events({
   'change [type=checkbox]': function(event) {
     var checked = $(event.target).is(':checked');
@@ -40,6 +41,7 @@ Template.todosItem.events({
   'keyup input[type=text]': _.throttle(function(event) {
     Todos.update(this._id, {$set: {text: event.target.value}});
   }, 300),
+
   
   // handle mousedown otherwise the blur handler above will swallow the click
   // on iOS, we still require the click event so handle both
@@ -57,7 +59,17 @@ Template.todosItem.rendered = function(){
     // Only call the notification on new tasks that are created
     if (Date.parse(this.data.createdAt) >= Session.get("LoadedTime")) {
       // Call notification to pop up toast
-      console.log(this.data)
+      //Session.set("LastItem",this);
+      //console.log(this);
+      //console.log(this.uniqueID);
+      //console.log(this.data);
+
+      //console.log("Selector: ", $(this.firstNode).find("input[type='checkbox']"))
+
+      //console.log("Checkbox: ", this.innerHTML);
+
+      //$(this.firstNode).find("input[type='checkbox']").prop("checked",true);
+
       if(typeof Windows !== 'undefined' && 
        typeof Windows.UI !== 'undefined' && 
        typeof Windows.UI.Notifications !== 'undefined') {
@@ -69,9 +81,11 @@ Template.todosItem.rendered = function(){
             toastImage = templateContent.getElementsByTagName('image'),
             toastElement = templateContent.selectSingleNode('/toast');
 
+        console.log(this.data._id);
+
         var launchParams = {
             type: 'toast',
-            id: this.data.listId || 'demoToast',
+            id: this.data._id || 'demoToast',
             heading: this.data.text || 'Demo title',
             body: this.data.text || 'Demo message'
         };
@@ -79,7 +93,7 @@ Template.todosItem.rendered = function(){
         var launchString = JSON.stringify(launchParams);
 
         var imgUrl, imgAlt;
-        imgUrl = "https://github.com/seksenov/WindowsToDos/blob/master/public/img/ToastLogo.png";
+        imgUrl = "https://raw.githubusercontent.com/seksenov/WindowsToDos/master/public/img/ToastLogo.png";
         imgAlt = 'https://unsplash.it/150/?random';
       
         // Set message & image in toast template

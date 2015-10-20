@@ -14,35 +14,42 @@ Meteor.startup(function () {
   if(Meteor.isClient) {
     Session.set("AppLoaded", false);
     Session.set("LoadedTime", Date.now());
+    var resposne = "no";
     // Check for Windows Activation Events
     if (typeof Windows !== 'undefined') {
       Windows.UI.WebUI.WebUIApplication.addEventListener("activated", function (args) {
-        console.log("Windows application is activated");
+        //console.log("Windows application is activated");
         // This is where handling the notification goes
         var activation = Windows.ApplicationModel.Activation;
 
         // Handle applcation launch from the Windows OS
         if (args.kind === activation.ActivationKind.launch) {
             // Check if there are launch args
-            console.log("This is a launch activation");
+            console.log("This is a LAUNCH activation");
             if(args.arguments) {
                 var launchArgs = JSON.parse(args.arguments);
                 if (launchArgs.type === 'toast') {
                 // The response button click is returned here
                 // console.log(launchArgs.id);
-                if (Session.get("Response") === "yes") {};
-                  console.log(launchArgs.id);
-                  // Todos.update(launchArgs.id, {$set: {checked: checked}});
+                console.log("Seesion at LAUNCH: ", typeof Session.get("Response"));
+                  if (Session.get("Response") === "yes") {
+                    Todos.update(launchArgs.id, {$set: {checked: true}});
+                  };
+                  //console.log("The response was yes these are the launch args id: "+launchArgs.id);
+                  
                 }
             }
         }
         // Handle user interaction from toast notification on Windows
         else if (args.kind === activation.ActivationKind.toastNotification) {                
               //toastHandler(args.argument, args.userInput.textReply);
-              console.log("This ia a toast notification activation");
+              console.log("This ia a TOAST activation");
               // resposne button pressed: console.log(args.argument);
-              console.log(args);
-              Session.set("Resposne", args.argument);
+              //console.log(args);
+              //console.log("yooooooooooooooooooooooooooooooooooooooooooooo");
+              //console.log(args.argument);
+              Session.set("Response", args.argument);
+              console.log("Seesion at TOAST: " + Session.get("Response"));
         }
       });
     } 
@@ -166,3 +173,45 @@ Template.appBody.events({
     Router.go('listsShow', list);
   }
 });
+
+Template.appBody.rendered = function() {
+  if(!this.rendered) {
+    this.rendered = true;
+    // Detect if the Windows namespace exists in the global object
+    if (typeof Windows !== 'undefined' &&
+      typeof Windows.UI !== 'undefined' &&
+      typeof Windows.UI.ViewManagement !== 'undefined') {
+      var brandColor = {r: 50, g: 84, b: 129, a:255}
+      var brandColorInactive = {r: 209, g: 237, b: 245, a:255}
+        // Get a reference to the App Title Bar
+        var appTitleBar = Windows.UI.ViewManagement.ApplicationView.getForCurrentView().titleBar;
+        
+        var black = {r: 0, g: 0, b: 0, a:255};
+        var white = {r: 255, g: 255, b: 255, a:255};
+
+        appTitleBar.foregroundColor = white;
+        appTitleBar.backgroundColor = brandColor;
+
+        appTitleBar.buttonForegroundColor = white;
+        appTitleBar.buttonBackgroundColor = brandColor;
+
+        appTitleBar.buttonHoverForegroundColor = white;
+        appTitleBar.buttonHoverBackgroundColor = brandColor;
+
+        appTitleBar.buttonPressedForegroundColor = brandColor;
+        appTitleBar.buttonPressedBackgroundColor = white;
+
+        appTitleBar.inactiveBackgroundColor = brandColorInactive;
+        appTitleBar.inactiveForegroundColor = brandColor;
+
+        appTitleBar.buttonInactiveForegroundColor = brandColor;
+        appTitleBar.buttonInactiveBackgroundColor = brandColorInactive;
+
+        appTitleBar.buttonInactiveHoverForegroundColor = brandColor;
+        appTitleBar.buttonInactiveHoverBackgroundColor = brandColorInactive;
+
+        appTitleBar.buttonPressedForegroundColor = brandColor;
+        appTitleBar.buttonPressedBackgroundColor = brandColorInactive;
+      }
+  }
+}
