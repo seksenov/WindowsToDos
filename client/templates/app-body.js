@@ -24,19 +24,25 @@ Meteor.startup(function () {
         // Handle applcation launch from the Windows OS
         if (args.kind === activation.ActivationKind.launch) {
             // Check if there are launch args
+            console.log("This is a launch activation");
             if(args.arguments) {
                 var launchArgs = JSON.parse(args.arguments);
-
                 if (launchArgs.type === 'toast') {
-                // The app has been launched from the click of a notification
-                console.log(args);
+                // The response button click is returned here
+                // console.log(launchArgs.id);
+                if (Session.get("Response") === "yes") {};
+                  console.log(launchArgs.id);
+                  // Todos.update(launchArgs.id, {$set: {checked: checked}});
                 }
             }
         }
         // Handle user interaction from toast notification on Windows
         else if (args.kind === activation.ActivationKind.toastNotification) {                
               //toastHandler(args.argument, args.userInput.textReply);
-              console.log(args.argument);
+              console.log("This ia a toast notification activation");
+              // resposne button pressed: console.log(args.argument);
+              console.log(args);
+              Session.set("Resposne", args.argument);
         }
       });
     } 
