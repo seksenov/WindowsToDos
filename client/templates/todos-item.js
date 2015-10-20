@@ -77,6 +77,10 @@ Template.todosItem.rendered = function(){
         };
 
         var launchString = JSON.stringify(launchParams);
+
+        var imgUrl, imgAlt;
+        imgUrl = "https://github.com/seksenov/WindowsToDos/blob/master/public/img/ToastLogo.png";
+        imgAlt = 'https://unsplash.it/150/?random';
       
         // Set message & image in toast template
         toastMessage[0].appendChild(templateContent.createTextNode(this.data.text || 'Demo message'));
