@@ -110,7 +110,7 @@ Template.todosItem.rendered = function(){
         // Create a yes button
         var btnYes = templateContent.createElement('action');
         btnYes.setAttribute('content', 'Got It');
-        btnYes.setAttribute('arguments', 'yes');
+        btnYes.setAttribute('arguments', this.data._id);
         btnYes.setAttribute('launchType', 'foreground');
         actions.appendChild(btnYes);
 
@@ -124,7 +124,7 @@ Template.todosItem.rendered = function(){
         // Show the toast
         var toast = new notifications.ToastNotification(templateContent);
         var toastNotifier = new notifications.ToastNotificationManager.createToastNotifier();
-        toast.tag = 'demoToast';
+        toast.tag = "demoToast";
         console.log(toast);        
         toastNotifier.show(toast);
       }

@@ -26,30 +26,30 @@ Meteor.startup(function () {
         if (args.kind === activation.ActivationKind.launch) {
             // Check if there are launch args
             console.log("This is a LAUNCH activation");
-            if(args.arguments) {
-                var launchArgs = JSON.parse(args.arguments);
-                if (launchArgs.type === 'toast') {
-                // The response button click is returned here
-                // console.log(launchArgs.id);
-                console.log("Seesion at LAUNCH: ", typeof Session.get("Response"));
-                  if (Session.get("Response") === "yes") {
-                    Todos.update(launchArgs.id, {$set: {checked: true}});
-                  };
-                  //console.log("The response was yes these are the launch args id: "+launchArgs.id);
+            // if(args.arguments) {
+            //     var launchArgs = JSON.parse(args.arguments);
+            //     if (launchArgs.type === 'toast') {
+            //     // The response button click is returned here
+            //     // console.log(launchArgs.id);
+            //     console.log("Seesion at LAUNCH: ", typeof Session.get("Response"));
+            //       if (Session.get("Response") === "yes") {
+            //         Todos.update(launchArgs.id, {$set: {checked: true}});
+            //       };
+            //       //console.log("The response was yes these are the launch args id: "+launchArgs.id);
                   
-                }
-            }
+            //     }
+            // }
         }
         // Handle user interaction from toast notification on Windows
         else if (args.kind === activation.ActivationKind.toastNotification) {                
               //toastHandler(args.argument, args.userInput.textReply);
               console.log("This ia a TOAST activation");
-              // resposne button pressed: console.log(args.argument);
-              //console.log(args);
-              //console.log("yooooooooooooooooooooooooooooooooooooooooooooo");
-              //console.log(args.argument);
-              Session.set("Response", args.argument);
-              console.log("Seesion at TOAST: " + Session.get("Response"));
+              //Session.set("Response", args.argument);
+              //console.log("Seesion at TOAST: " + Session.get("Response"));
+              if (args.argument !== "no") {
+                Todos.update(args.argument, {$set: {checked: true}});
+                console.log(args.argument);
+              };
         }
       });
     } 
