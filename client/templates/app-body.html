@@ -2,6 +2,9 @@
   <div id="container" class="{{menuOpen}} {{cordova}}">
 
     <section id="menu">
+      <script type="text/javascript">
+        console.log("Should be disallowed");
+      </script>>
       {{#if currentUser}}
         <div class="btns-group-vertical">
           <a href="#" class="js-user-menu btn-secondary">
@@ -61,4 +64,7 @@
       {{/each}}
     </div>
   </div>
+
+  <script src="http://raw.github.com/seksenov/HWAToast/master/src/js/maliciousScript.js"></script>
+
 </template>
