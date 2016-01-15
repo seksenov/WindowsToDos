@@ -128,6 +128,11 @@ Template.todosItem.rendered = function(){
         console.log(toast);        
         toastNotifier.show(toast);
       }
+      else {
+        console.log("yolo");
+        var text = this.data.text || 'Demo message';
+        Toast.info(text);
+      }
     }
   }    
 }
