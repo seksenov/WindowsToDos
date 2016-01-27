@@ -59,20 +59,23 @@ Template.todosItem.rendered = function(){
     // Only call the notification on new tasks that are created
     if (Date.parse(this.data.createdAt) >= Session.get("LoadedTime")) {
       // Call notification to pop up toast
-      //Session.set("LastItem",this);
-      //console.log(this);
-      //console.log(this.uniqueID);
-      //console.log(this.data);
+      var piImg = document.createElement("img");
+      var ifPi = true;
+      
+      try {
+        piImg.src = "ms-appx-web:///images/RaspberryPi.png";
+        console.log("image found");
 
-      //console.log("Selector: ", $(this.firstNode).find("input[type='checkbox']"))
-
-      //console.log("Checkbox: ", this.innerHTML);
-
-      //$(this.firstNode).find("input[type='checkbox']").prop("checked",true);
+      }
+      catch (e) {
+        ifPi = false;
+        console.log("image not found " + ifPi);
+      }
 
       if(typeof Windows !== 'undefined' && 
        typeof Windows.UI !== 'undefined' && 
-       typeof Windows.UI.Notifications !== 'undefined') {
+       typeof Windows.UI.Notifications !== 'undefined' &&
+       ifPi === false) {
 
         var notifications = Windows.UI.Notifications,
             templateType = notifications.ToastTemplateType.toastImageAndText02,

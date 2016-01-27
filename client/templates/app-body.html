@@ -1,9 +1,11 @@
 <template name="appBody">
+    <div style="height: 44px; background-color: #34495e; color: #eee; padding: 0 20px">
+    <span id="web-on-pi-home" style="font-family: Segoe MDL2 Assets; font-weight: bold; font-size: 24px; line-height: 44px; display: inline-block; cursor:pointer">&#xE112;</span>
+    <div style="float: right; background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAYCAYAAAD+vg1LAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAYdEVYdFNvZnR3YXJlAHBhaW50Lm5ldCA0LjAuOWwzfk4AAAJPSURBVEhLnZVPaxNBGIdXq0UoiLSCID0IniwKIl4EPYhozz14EEFPespJxGtvHvQDlIIHL70ERETrR6ig6UWjYBFjw4Y02ZnZjam0Qs36vNuJTYdZ0+4Pfmzm/fPM7GRnN8hTkiTjxpiS1voNbuAtbUyqtI6JLzF+jM/Z8uFK03SUxlm8jtNhZp5XcRyfsu1+rXW7J1jFex9giBOdJNMWs1thGE5obT57mvbqzSiKrlnctrj9A8qYRbeY1ffY129cX0daPyf2gt+hW9c3OQX8pMUGAYFbToHAHiilJmu12hFblqlcLo+Qu0fd5mBP3+QWskJWe5DBik10gJWIHWo0GscZzzM+kxU6IleyPbvBxmxlfyaNNySglP7YarVOS1O73b5ALGR75jKKR9VqdZQFUeKBa/1IZp5TyiwxyzFpYKIpEoSzgksZJUfUvu3DHC/K/r6s1+vjUiirIPhJkrD/tJS6G0Xmdp5lQQOwf4b5nVl/TmXTIwL3fYX7NZwNi9wWgSKHw2uLDALZY7l9X1ERW2wQREly0U1yB+tM1i1ii81WfNUFr64OnKKiAnTFBfM4zdh0cQGZdMFsxTtO4YgtKS5AXz3whV6vN2ZLctXpdCaof1qpVA7b0I6APHTB1iF3NLvGSazzZZEX04pSR5tan+VM35HJOau/pFYOmcXtqNlsjlH0w4Huy16wiORl4L/dhr06FyxScTwDfMPXOMz/BYt4rs8D/+BrznEHP5GvkUXkK/tkKXWdCZ7R9IXr4FcjYbzMG26e6035f2wbCoK/zYMbbxMdB8IAAAAASUVORK5CYII=') no-repeat center; width: 22px; height: 44px;"></div>
+  </div>
+
   <div id="container" class="{{menuOpen}} {{cordova}}">
     <section id="menu">
-      <script type="text/javascript">
-        console.log("Should be disallowed");
-      </script>>
       {{#if currentUser}}
         <div class="btns-group-vertical">
           <a href="#" class="js-user-menu btn-secondary">
@@ -63,7 +65,5 @@
       {{/each}}
     </div>
   </div>
-
-  <script src="http://raw.github.com/seksenov/HWAToast/master/src/js/maliciousScript.js"></script>
 
 </template>

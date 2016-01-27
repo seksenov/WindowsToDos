@@ -141,6 +141,10 @@ Template.appBody.events({
     Session.set(MENU_KEY, ! Session.get(MENU_KEY));
   },
 
+  'click #web-on-pi-home': function() {
+    window.location.href = "webonpi:home";
+  },
+
   'click .content-overlay': function(event) {
     Session.set(MENU_KEY, false);
     event.preventDefault();
