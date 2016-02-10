@@ -26,19 +26,6 @@ Meteor.startup(function () {
         if (args.kind === activation.ActivationKind.launch) {
             // Check if there are launch args
             console.log("This is a LAUNCH activation");
-            // if(args.arguments) {
-            //     var launchArgs = JSON.parse(args.arguments);
-            //     if (launchArgs.type === 'toast') {
-            //     // The response button click is returned here
-            //     // console.log(launchArgs.id);
-            //     console.log("Seesion at LAUNCH: ", typeof Session.get("Response"));
-            //       if (Session.get("Response") === "yes") {
-            //         Todos.update(launchArgs.id, {$set: {checked: true}});
-            //       };
-            //       //console.log("The response was yes these are the launch args id: "+launchArgs.id);
-                  
-            //     }
-            // }
         }
         // Handle user interaction from toast notification on Windows
         else if (args.kind === activation.ActivationKind.toastNotification) {                
