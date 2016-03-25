@@ -38,6 +38,16 @@ Meteor.startup(function () {
                 console.log(args.argument);
               };
         }
+        else if (args.kind === activation.ActivationKind.voiceCommand) {
+          console.log("adding to do through voice");
+
+          var speechRecognitionResult = args.result;
+
+          if (speechRecognitionResult.rulePath[0] === "addTodo") {
+            console.log("adding to do");
+            //handling to add to do
+          }
+        }
       });
     } 
   }

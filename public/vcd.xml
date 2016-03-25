@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<VoiceCommands xmlns="http://schemas.microsoft.com/voicecommands/1.2">
+  <CommandSet xml:lang="en-us" Name="WindowsToDo">
+    <CommandPrefix>Windows ToDo</CommandPrefix>
+    <Example>Windows ToDo show tasks</Example>
+    <Command Name="addTodo">
+      <Example>add {message} using Windows ToDo</Example>
+      <ListenFor RequireAppName="BeforeOrAfterPhrase">send message {messageSubject}</ListenFor>
+      <Feedback>adding {messageSubject} to WindowsToDo</Feedback>
+      <Navigate Target="/addTodo.htm"/>
+    </Command>
+    <PhraseTopic Label="messageSubject" Scenario="Dictation"></PhraseTopic>
+  </CommandSet>
+</VoiceCommands>
